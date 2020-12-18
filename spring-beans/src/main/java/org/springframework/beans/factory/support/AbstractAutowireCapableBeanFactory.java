@@ -958,13 +958,20 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 	protected Object getEarlyBeanReference(String beanName, RootBeanDefinition mbd, Object bean) {
 		Object exposedObject = bean;
 		if (!mbd.isSynthetic() && hasInstantiationAwareBeanPostProcessors()) {
+			//获取所有的后置处理器
 			for (BeanPostProcessor bp : getBeanPostProcessors()) {
+				//判断是否是SmartInstantiationAwareBeanPostProcessor
+				//此接口实现类为AnnotationAwareAspectJAutoProxyCreator，也就是AOP相关
 				if (bp instanceof SmartInstantiationAwareBeanPostProcessor) {
 					SmartInstantiationAwareBeanPostProcessor ibp = (SmartInstantiationAwareBeanPostProcessor) bp;
 					exposedObject = ibp.getEarlyBeanReference(exposedObject, beanName);
 				}
 			}
 		}
+		/*如果不考虑AOP相关，其实此方法就两行代码，所以三级缓存主要是为了AOP来设计的
+		*Object exposedObject = bean;
+		* return exposedObject;
+		* */
 		return exposedObject;
 	}
 

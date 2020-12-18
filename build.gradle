@@ -278,6 +278,9 @@ configure(allprojects) { project ->
 			cacheChangingModulesFor 0, "seconds"
 		}
 		repositories {
+			maven {url 'file://' + new File('D:\\.m2/repository')}
+			//添加阿里云镜像
+			maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
 			mavenCentral()
 			maven { url "https://repo.spring.io/libs-spring-framework-build" }
 		}
